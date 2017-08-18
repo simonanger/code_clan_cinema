@@ -9,7 +9,7 @@ class Customer
   def initialize(options)
     @id = options['id'].to_i
     @name = options['name']
-    @funds = options['funds']
+    @funds = options['funds'].to_i
   end
 
   def save()
@@ -60,7 +60,7 @@ class Customer
     SqlRunner.run(sql, values)
   end
 
-  def films_seen
+  def films_seen()
     sql = 'SELECT films.title FROM films
     INNER JOIN tickets ON films.id = tickets.films_id
     WHERE customer_id = $1;'
@@ -74,13 +74,19 @@ class Customer
       return array
   end
 
-  def tickets_bought
+  def tickets_bought()
     sql = 'SELECT * FROM tickets
     WHERE tickets.customer_id = $1'
     values = [@id]
     result = SqlRunner.run(sql, values)
     count = result.map {|hash| Ticket.new(hash)}.length
     return count
+  end
+
+  def update_funds()
+    spend = self.tickets_bought * 5
+    sum = self.funds -= spend
+    return self.funds
   end
 
 end
