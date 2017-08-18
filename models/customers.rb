@@ -13,18 +13,31 @@ class Customer
   end
 
   def save()
-    sql = "INSERT INTO customer
+    sql = 'INSERT INTO customer
     (
-        name,
-        funds
+      name,
+      funds
     )
     VALUES (
       $1, $2
     )
-    RETURNING id"
+    RETURNING id;'
     values = [@name, @funds]
     result = SqlRunner.run( sql, values )
     @id = result[0]['id'].to_i()
+  end
+
+  def update()
+    sql = 'UPDATE customer SET
+    (
+      name,
+      funds
+    ) = (
+      $1, $2
+    )
+    WHERE id = $3;'
+    values = [@name, @funds, @id]
+    SqlRunner.run(sql, values)
   end
 
 end
