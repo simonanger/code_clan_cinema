@@ -25,7 +25,6 @@ class Customer
     values = [@name, @funds]
     result = SqlRunner.run( sql, values )
     @id = result[0]['id'].to_i()
-
   end
 
 end
