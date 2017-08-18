@@ -36,5 +36,11 @@ class Ticket
     return result
   end
 
+  def self.delete_all()
+    sql = 'DELETE FROM tickets'
+    values = []
+    SqlRunner.run(sql, values)
+  end
+
 
 end
