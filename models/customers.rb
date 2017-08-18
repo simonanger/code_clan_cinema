@@ -74,4 +74,13 @@ class Customer
       return array
   end
 
+  def tickets_bought
+    sql = 'SELECT * FROM tickets
+    WHERE tickets.customer_id = $1'
+    values = [@id]
+    result = SqlRunner.run(sql, values)
+    count = result.map {|hash| Ticket.new(hash)}.length
+    return count
+  end
+
 end
