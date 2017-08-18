@@ -85,7 +85,8 @@ class Customer
 
   def update_funds()
     spend = self.tickets_bought * 5
-    sum = self.funds -= spend
+    self.funds -= spend
+    self.update
     return self.funds
   end
 
