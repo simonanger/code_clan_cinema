@@ -61,12 +61,17 @@ class Customer
   end
 
   def films_seen
-    sql = 'SELECT films.* FROM films
+    sql = 'SELECT films.title FROM films
     INNER JOIN tickets ON films.id = tickets.films_id
     WHERE customer_id = $1;'
     values = [@id]
-    seen = SqlRunner.run(sql, values)
-    result = seen.map {|hash| Film.new(hash)}
+    result = SqlRunner.run(sql, values)
+    array = Array.new
+    films = result.map {|hash| Film.new(hash)}
+    for item in films do
+        array.push(item.title)
+    end
+      return array
   end
 
 end

@@ -64,7 +64,12 @@ class Film
     WHERE films_id = $1;'
     values = [@id]
     result = SqlRunner.run(sql, values)
-    return result.map {|hash| Customer.new(hash)}
+    array = Array.new
+    customers = result.map {|hash| Customer.new(hash)}
+    for person in customers do
+        array.push(person.name)
+    end
+      return array
   end
 
 end
