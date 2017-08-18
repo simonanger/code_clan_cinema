@@ -72,4 +72,13 @@ class Film
       return array
   end
 
+  def customer_count
+    sql = 'SELECT * FROM tickets
+    WHERE tickets.films_id = $1'
+    values = [@id]
+    result = SqlRunner.run(sql, values)
+    count = result.map {|hash| Film.new(hash)}.length
+    return count
+  end
+
 end
