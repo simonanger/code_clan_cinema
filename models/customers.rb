@@ -40,4 +40,12 @@ class Customer
     SqlRunner.run(sql, values)
   end
 
+  def self.all()
+    sql = 'SELECT * FROM customer'
+    values = []
+    customers = SqlRunner.run(sql, values)
+    result = customers.map {|customer_hash| Customer.new(customer_hash)}
+    return result
+  end
+
 end
